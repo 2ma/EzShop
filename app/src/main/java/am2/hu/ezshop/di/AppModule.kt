@@ -4,14 +4,16 @@ import am2.hu.ezshop.persistance.dao.HistoryDao
 import am2.hu.ezshop.persistance.dao.ItemDao
 import am2.hu.ezshop.persistance.dao.ShopDao
 import am2.hu.ezshop.persistance.db.EzDatabase
+import am2.hu.ezshop.viewmodel.EzShopViewModelFactory
 import android.app.Application
+import android.arch.lifecycle.ViewModelProvider
 import android.arch.persistence.room.Room
 import android.content.Context
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
-@Module
+@Module(subcomponents = arrayOf(ViewModelSubComponent::class))
 class AppModule(private val application: Application) {
     @Provides
     @Singleton
@@ -35,5 +37,10 @@ class AppModule(private val application: Application) {
 
     @Provides
     @Singleton
-    fun providesHistorypDao(database: EzDatabase): HistoryDao = database.historyDao()
+    fun providesHistoryDao(database: EzDatabase): HistoryDao = database.historyDao()
+
+    @Provides
+    @Singleton
+    fun providesViewModelFactory(viewModelSubComponent: ViewModelSubComponent.Builder): ViewModelProvider.Factory = EzShopViewModelFactory(viewModelSubComponent.build())
+
 }
