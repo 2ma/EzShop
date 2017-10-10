@@ -1,0 +1,86 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion 26
+    buildToolsVersion "26.0.2"
+    defaultConfig {
+        applicationId "am2.hu.ezshop"
+        minSdkVersion 19
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        //used by Room, to test migrations
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation":
+                                     "$projectDir/schemas".toString()]
+            }
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    sourceSets {
+        androidTest.assets.srcDirs +=
+                files("$projectDir/schemas".toString())
+        String commonTestDir = 'src/test-common/java'
+        test {
+            java.srcDir commonTestDir
+        }
+
+        androidTest {
+            java.srcDir commonTestDir
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+
+    //unit test
+    testImplementation 'junit:junit:4.12'
+    testImplementation "org.mockito:mockito-core:$rootProject.ext.mockitoVersion"
+
+    androidTestImplementation ('com.android.support.test.espresso:espresso-core:3.0.1', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+
+    //android arch
+    implementation "android.arch.lifecycle:runtime:$rootProject.archLifecycleVersion"
+    implementation "android.arch.lifecycle:extensions:$rootProject.archLifecycleVersion"
+    kapt "android.arch.lifecycle:compiler:$rootProject.archLifecycleVersion"
+
+    //room
+    implementation "android.arch.persistence.room:runtime:$rootProject.roomVersion"
+    kapt "android.arch.persistence.room:compiler:$rootProject.roomVersion"
+    implementation "android.arch.persistence.room:rxjava2:$rootProject.roomVersion"
+
+    //dagger
+    implementation "com.google.dagger:dagger:$rootProject.dagger_version"
+    implementation "com.google.dagger:dagger-android:$rootProject.dagger_version"
+    implementation "com.google.dagger:dagger-android-support:$rootProject.dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$rootProject.dagger_version"
+    kapt "com.google.dagger:dagger-android-processor:$rootProject.dagger_version"
+
+    implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+
+    // Android Testing Support Library's runner and rules
+    androidTestImplementation "com.android.support.test:runner:$rootProject.ext.runnerVersion"
+    androidTestImplementation "com.android.support.test:rules:$rootProject.ext.runnerVersion"
+    androidTestImplementation "android.arch.persistence.room:testing:$rootProject.roomVersion"
+    androidTestImplementation "android.arch.core:core-testing:$rootProject.roomVersion"
+}
