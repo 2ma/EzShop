@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">EzShop</string>
+    <string name="add_new_list">Új lista</string>
+    <string name="new_list">Lista név</string>
+    <string name="add_new_item">Új termék</string>
+    <string name="no_list">Nincs lista</string>
+    <string name="empty_list_name">Üres név</string>
+    <string name="delete_list">Lista törlése</string>
+    <string name="delete_list_confirmation">Töröljük a listát?</string>
+    <string name="delete_completed">Elvégzettek törlése</string>
+</resources>

@@ -20,7 +20,7 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class HistoryDaoTest {
 
-    @Rule
+    @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
 

@@ -3,7 +3,7 @@ package am2.hu.ezshop.persistence.dao
 import am2.hu.ezshop.getValueTest
 import am2.hu.ezshop.persistance.db.EzDatabase
 import am2.hu.ezshop.persistance.entity.Item
-import am2.hu.ezshop.persistance.entity.Shop
+import am2.hu.ezshop.persistance.entity.ListName
 import android.arch.core.executor.testing.InstantTaskExecutorRule
 import android.arch.persistence.room.Room
 import android.support.test.InstrumentationRegistry
@@ -17,7 +17,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class ShopDaoTest {
+class ListNameDaoTest {
     @Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
@@ -38,75 +38,75 @@ class ShopDaoTest {
 
     @Test
     fun getShopsEmptyDbTest() {
-        val result = database.shopDao().getAllShops().getValueTest()
+        val result = database.listNameDao().getAllListNames().getValueTest()
 
         assertThat(result.size, `is`(0))
     }
 
     @Test
     fun addShopTest() {
-        val shop = Shop("test")
+        val shop = ListName("test")
 
-        database.shopDao().addShop(shop)
+        database.listNameDao().addListName(shop)
 
-        val result = database.shopDao().getAllShops().getValueTest()
+        val result = database.listNameDao().getAllListNames().getValueTest()
 
         assertThat(result.size, `is`(1))
 
-        assertThat(result[0].shopName, `is`("test"))
+        assertThat(result[0].listName, `is`("test"))
     }
 
     @Test
     fun getAllShopsTest() {
         for (i in 1..3) {
-            database.shopDao().addShop(Shop("shop$i"))
+            database.listNameDao().addListName(ListName("listName$i"))
         }
 
-        val result = database.shopDao().getAllShops().getValueTest()
+        val result = database.listNameDao().getAllListNames().getValueTest()
 
         assertThat(result.size, `is`(3))
 
-        assertThat(result[0].shopName, `is`("shop1"))
+        assertThat(result[0].listName, `is`("shop1"))
 
-        assertThat(result[1].shopName, `is`("shop2"))
+        assertThat(result[1].listName, `is`("shop2"))
 
-        assertThat(result[2].shopName, `is`("shop3"))
+        assertThat(result[2].listName, `is`("shop3"))
     }
 
     @Test
     fun deleteShopTest() {
-        val shop = Shop("test")
+        val shop = ListName("test")
 
-        database.shopDao().addShop(shop)
+        database.listNameDao().addListName(shop)
 
-        val result = database.shopDao().getAllShops().getValueTest()
+        val result = database.listNameDao().getAllListNames().getValueTest()
 
         assertThat(result.size, `is`(1))
 
-        assertThat(result[0].shopName, `is`("test"))
+        assertThat(result[0].listName, `is`("test"))
 
-        database.shopDao().deleteShop(shop)
+        database.listNameDao().deleteListName(shop)
 
-        val resultTest = database.shopDao().getAllShops().getValueTest()
+        val resultTest = database.listNameDao().getAllListNames().getValueTest()
 
         assertThat(resultTest.size, `is`(0))
     }
 
     @Test
     fun deleteAllItemsWithShopTest() {
-        val shop = Shop("test")
+        val shop = ListName("test")
 
-        database.shopDao().addShop(shop)
+        database.listNameDao().addListName(shop)
 
         for (i in 1..4) {
             database.itemDao().addItem(Item("item$i", false, "test"))
         }
 
-        val shopResult = database.shopDao().getAllShops().getValueTest()
+        val shopResult = database.listNameDao().getAllListNames().getValueTest()
 
         assertThat(shopResult.size, `is`(1))
 
-        assertThat(shopResult[0].shopName, `is`("test"))
+        assertThat(shopResult[0].listName, `is`("test"))
 
         val itemResult = database.itemDao().getItemsForShop("test").getValueTest()
 
@@ -116,9 +116,9 @@ class ShopDaoTest {
 
         assertThat(itemResult[1].itemName, `is`("item2"))
 
-        database.shopDao().deleteShop(shop)
+        database.listNameDao().deleteListName(shop)
 
-        val shopResultTest = database.shopDao().getAllShops().getValueTest()
+        val shopResultTest = database.listNameDao().getAllListNames().getValueTest()
 
         assertThat(shopResultTest.size, `is`(0))
 

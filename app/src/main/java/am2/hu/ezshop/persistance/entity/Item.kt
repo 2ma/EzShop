@@ -6,11 +6,11 @@ import android.arch.persistence.room.ForeignKey.CASCADE
 import android.arch.persistence.room.PrimaryKey
 
 
-@Entity(tableName = "items", foreignKeys = arrayOf(ForeignKey(entity = Shop::class, parentColumns = arrayOf("shopName"), childColumns = arrayOf("shop"), onDelete = CASCADE)))
+@Entity(tableName = "items", foreignKeys = arrayOf(ForeignKey(entity = ListName::class, parentColumns = arrayOf("listName"), childColumns = arrayOf("listName"), onDelete = CASCADE)))
 data class Item(
         val itemName: String,
         val completed: Boolean,
-        val shop: String
+        val listName: String
 ) {
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0

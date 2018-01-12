@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menuDeleteList"
+        android:title="@string/delete_list"
+        app:showAsAction="never"
+        />
+    <item
+        android:id="@+id/menuDeleteCompleted"
+        android:title="@string/delete_completed"
+        app:showAsAction="never"
+        />
+</menu>

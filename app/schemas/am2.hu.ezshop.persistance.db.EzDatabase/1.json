@@ -2,22 +2,22 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "be41909815355f5ef985af7752ad7275",
+    "identityHash": "64bba6f34a025e08d1c49e1c1cb0ef6c",
     "entities": [
       {
-        "tableName": "shops",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`shopName` TEXT NOT NULL, PRIMARY KEY(`shopName`))",
+        "tableName": "listNames",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`listName` TEXT NOT NULL, PRIMARY KEY(`listName`))",
         "fields": [
           {
-            "fieldPath": "shopName",
-            "columnName": "shopName",
+            "fieldPath": "listName",
+            "columnName": "listName",
             "affinity": "TEXT",
             "notNull": true
           }
         ],
         "primaryKey": {
           "columnNames": [
-            "shopName"
+            "listName"
           ],
           "autoGenerate": false
         },
@@ -46,7 +46,7 @@
       },
       {
         "tableName": "items",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `itemName` TEXT NOT NULL, `completed` INTEGER NOT NULL, `shop` TEXT NOT NULL, FOREIGN KEY(`shop`) REFERENCES `shops`(`shopName`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `itemName` TEXT NOT NULL, `completed` INTEGER NOT NULL, `listName` TEXT NOT NULL, FOREIGN KEY(`listName`) REFERENCES `listNames`(`listName`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
@@ -67,8 +67,8 @@
             "notNull": true
           },
           {
-            "fieldPath": "shop",
-            "columnName": "shop",
+            "fieldPath": "listName",
+            "columnName": "listName",
             "affinity": "TEXT",
             "notNull": true
           }
@@ -82,14 +82,14 @@
         "indices": [],
         "foreignKeys": [
           {
-            "table": "shops",
+            "table": "listNames",
             "onDelete": "CASCADE",
             "onUpdate": "NO ACTION",
             "columns": [
-              "shop"
+              "listName"
             ],
             "referencedColumns": [
-              "shopName"
+              "listName"
             ]
           }
         ]
@@ -97,7 +97,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"be41909815355f5ef985af7752ad7275\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"64bba6f34a025e08d1c49e1c1cb0ef6c\")"
     ]
   }
 }

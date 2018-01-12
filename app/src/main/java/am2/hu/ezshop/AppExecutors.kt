@@ -6,7 +6,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-open class AppExecutors(diskIO: Executor) {
+open class AppExecutors(val diskIO: Executor) {
 
     @Inject constructor() : this(Executors.newSingleThreadExecutor())
 }

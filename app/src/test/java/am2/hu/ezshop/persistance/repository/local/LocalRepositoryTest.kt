@@ -5,10 +5,11 @@ import am2.hu.ezshop.argumentCaptor
 import am2.hu.ezshop.capture
 import am2.hu.ezshop.persistance.dao.HistoryDao
 import am2.hu.ezshop.persistance.dao.ItemDao
-import am2.hu.ezshop.persistance.dao.ShopDao
+import am2.hu.ezshop.persistance.dao.ListNameDao
 import am2.hu.ezshop.persistance.entity.History
 import am2.hu.ezshop.persistance.entity.Item
-import am2.hu.ezshop.persistance.entity.Shop
+import am2.hu.ezshop.persistance.entity.ListName
+import android.content.SharedPreferences
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.Is.`is`
 import org.junit.Before
@@ -20,59 +21,61 @@ import org.mockito.Mockito.verify
 
 @RunWith(JUnit4::class)
 class LocalRepositoryTest {
-    val shopDao = mock(ShopDao::class.java)
-    val itemDao = mock(ItemDao::class.java)
-    val historyDao = mock(HistoryDao::class.java)
-    lateinit var localRepository: LocalRepository
+    private val shopDao = mock(ListNameDao::class.java)
+    private val itemDao = mock(ItemDao::class.java)
+    private val historyDao = mock(HistoryDao::class.java)
+    private lateinit var localRepository: LocalRepository
+    private val shared = mock(SharedPreferences::class.java)
+    private val exe = InstantAppExecutors()
 
     @Before
     fun init() {
-        localRepository = LocalRepository(shopDao, itemDao, historyDao, InstantAppExecutors())
+        localRepository = LocalRepository(shopDao, itemDao, historyDao, exe, shared)
     }
 
     @Test
     fun getAllShops() {
-        localRepository.getAllShops()
+        localRepository.getAllListNames()
 
-        verify(shopDao).getAllShops()
+        verify(shopDao).getAllListNames()
     }
 
     @Test
     fun addShopTest() {
-        val shop = Shop("test")
+        val shop = ListName("test")
 
-        localRepository.addShop(shop)
+        localRepository.addListName(shop)
 
-        val captor = argumentCaptor<Shop>()
+        val captor = argumentCaptor<ListName>()
 
-        verify(shopDao).addShop(capture(captor))
+        verify(shopDao).addListName(capture(captor))
 
-        assertThat(captor.value.shopName, `is`("test"))
+        assertThat(captor.value.listName, `is`("test"))
     }
 
     @Test
     fun deleteShop() {
-        val shop = Shop("test")
+        val shop = ListName("test")
 
-        localRepository.deleteShop(shop)
+        localRepository.deleteListName(shop)
 
-        val captor = argumentCaptor<Shop>()
+        val captor = argumentCaptor<ListName>()
 
-        verify(shopDao).deleteShop(capture(captor))
+        verify(shopDao).deleteListName(capture(captor))
 
-        assertThat(captor.value.shopName, `is`("test"))
+        assertThat(captor.value.listName, `is`("test"))
     }
 
     @Test
     fun getItemsForShopTest() {
-        localRepository.getItemsForShop("test")
+        localRepository.getItemsForList("test")
 
         verify(itemDao).getItemsForShop("test")
     }
 
     @Test
     fun addItemTest() {
-        val item = Item("test", false, "shop")
+        val item = Item("test", false, "listName")
 
         localRepository.addItem(item)
 
@@ -82,12 +85,12 @@ class LocalRepositoryTest {
 
         assertThat(captor.value.itemName, `is`("test"))
 
-        assertThat(captor.value.shop, `is`("shop"))
+        assertThat(captor.value.listName, `is`("listName"))
     }
 
     @Test
     fun deleteItemTest() {
-        val item = Item("test", false, "shop")
+        val item = Item("test", false, "listName")
 
         localRepository.deleteItem(item)
 
@@ -97,7 +100,7 @@ class LocalRepositoryTest {
 
         assertThat(captor.value.itemName, `is`("test"))
 
-        assertThat(captor.value.shop, `is`("shop"))
+        assertThat(captor.value.listName, `is`("listName"))
     }
 
     @Test

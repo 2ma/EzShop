@@ -2,18 +2,19 @@ package am2.hu.ezshop.di
 
 import am2.hu.ezshop.persistance.dao.HistoryDao
 import am2.hu.ezshop.persistance.dao.ItemDao
-import am2.hu.ezshop.persistance.dao.ShopDao
+import am2.hu.ezshop.persistance.dao.ListNameDao
 import am2.hu.ezshop.persistance.db.EzDatabase
 import am2.hu.ezshop.viewmodel.EzShopViewModelFactory
 import android.app.Application
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.persistence.room.Room
 import android.content.Context
+import android.content.SharedPreferences
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
-@Module(subcomponents = arrayOf(ViewModelSubComponent::class))
+@Module(subcomponents = [(ViewModelSubComponent::class)])
 class AppModule(private val application: Application) {
     @Provides
     @Singleton
@@ -22,6 +23,9 @@ class AppModule(private val application: Application) {
             Room.databaseBuilder(application, EzDatabase::class.java, "ez_shop.db")
                     .build()
 
+    @Provides
+    @Singleton
+    fun providesSharedPreferences(): SharedPreferences = application.getSharedPreferences("settings", Context.MODE_PRIVATE)
 
     @Provides
     @Singleton
@@ -29,7 +33,7 @@ class AppModule(private val application: Application) {
 
     @Provides
     @Singleton
-    fun providesShopDao(database: EzDatabase): ShopDao = database.shopDao()
+    fun providesShopDao(database: EzDatabase): ListNameDao = database.listNameDao()
 
     @Provides
     @Singleton

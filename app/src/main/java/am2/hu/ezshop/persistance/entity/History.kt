@@ -6,4 +6,6 @@ import android.arch.persistence.room.PrimaryKey
 
 @Entity
 data class History(
-        @PrimaryKey val itemName: String)
+        @PrimaryKey val itemName: String) {
+    override fun toString(): String = itemName
+}

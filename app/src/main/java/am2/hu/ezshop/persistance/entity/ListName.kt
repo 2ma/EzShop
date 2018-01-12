@@ -4,6 +4,6 @@ import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
 
 
-@Entity(tableName = "shops")
-data class Shop(
-        @PrimaryKey val shopName: String)
+@Entity(tableName = "listNames")
+data class ListName(
+        @PrimaryKey val listName: String)

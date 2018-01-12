@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">EzShop</string>
-    <string name="add_new_shop">Add new shop</string>
+    <string name="add_new_list">Add new list</string>
+    <string name="new_list">List name</string>
+    <string name="no_list">No list</string>
+    <string name="add_new_item">New item</string>
+    <string name="empty_list_name">Empty list name</string>
+    <string name="delete_list">Delete list</string>
+    <string name="delete_completed">Delete completed</string>
+    <string name="delete_list_confirmation">Delete the whole list?</string>
 </resources>
